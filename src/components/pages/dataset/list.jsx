@@ -12,9 +12,10 @@ class DatasetList extends React.Component {
       columnWidths: {
         id: 250,
         name: 500,
-        application: 150,
+        application: 75,
         provider: 100,
         tags: 200,
+        status: 75,
       },
     };
 
@@ -100,7 +101,7 @@ class DatasetList extends React.Component {
             />
             <Column
               columnKey="application"
-              header={<Cell> Application </Cell>}
+              header={<Cell> App </Cell>}
               cell={<TextCell data={this.state.filteredList} />}
               width={columnWidths.application}
               isResizable
@@ -117,6 +118,13 @@ class DatasetList extends React.Component {
               header={<Cell> Tags </Cell>}
               cell={<TextCell data={this.state.filteredList} />}
               width={columnWidths.tags}
+              isResizable
+            />
+            <Column
+              columnKey="meta.status"
+              header={<Cell> Status </Cell>}
+              cell={<TextCell data={this.state.filteredList} />}
+              width={columnWidths.status}
               isResizable
             />
           </Table>}

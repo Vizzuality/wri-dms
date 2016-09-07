@@ -1,13 +1,1 @@
-[{
-  "label": "Prep",
-  "value": "prep"
-},{
-  "label": "Global Forest Watch",
-  "value": "gfw"
-},{
-  "label": "Resource Watch",
-  "value": "rw"
-},{
-  "label": "GFW Climate",
-  "value": "gfwclimate"
-}]
+["prep", "gfw", "rw", "climate"]

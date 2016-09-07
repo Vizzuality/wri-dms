@@ -20,7 +20,7 @@ class DatasetNew extends React.Component {
         connector_provider: values.connectorProvider,
         connector_url: values.connectorUrl,
         dataset_attributes: {
-          application: [values.application],
+          application: values.application,
           name: values.name,
           tags: values.tags,
           data_path: values.dataPath,

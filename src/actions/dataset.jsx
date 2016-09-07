@@ -20,7 +20,7 @@ function handleErrors(errors) {
 export function getDatasets() {
   return (dispatch) => {
     // debugger; // eslint-disable-line no-restricted-syntax, no-debugger
-    fetch(`${BASE_API_URL}/datasets`, { method: 'GET' }).then((response) => {
+    fetch(`${BASE_API_URL}/datasets?status=all`, { method: 'GET' }).then((response) => {
       if (response.ok) {
         return response.json();
       }

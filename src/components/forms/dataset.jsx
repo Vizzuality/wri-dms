@@ -6,6 +6,7 @@ import MultiselectForm from 'components/forms/multiselectForm';
 import datasetConfig from 'config/datasetConfig.json';
 import applications from 'config/applications.json';
 
+
 const DatasetForm = (props) => {
 
   const { handleSubmit, pristine, reset, submitting, connectorTypeValue } = props;
@@ -29,7 +30,7 @@ const DatasetForm = (props) => {
           <div className="columns medium-6">
             <label>Applications</label>
             <div>
-              <Field name="application" component={SelectForm} options={applications} />
+              <Field name="application" component={MultiselectForm} data={applications} create={false} />
             </div>
           </div>
         </div>
@@ -51,7 +52,7 @@ const DatasetForm = (props) => {
           <div className="columns medium-12">
             <label>Tags</label>
             <div>
-              <Field name="tags" component={MultiselectForm} />
+              <Field name="tags" component={MultiselectForm} create />
             </div>
           </div>
         </div>

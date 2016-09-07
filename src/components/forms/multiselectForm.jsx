@@ -18,13 +18,13 @@ class MultiselectForm extends Component {
   }
 
   render() {
-    const { input, ...rest } = this.props;
+    const { input, create, ...rest } = this.props;
     return (
       <Multiselect
         {...input}
         onBlur={() => { input.onBlur(); }}
         value={input.value || []} // requires value to be an array
-        onCreate={this.onCreate}
+        onCreate={create ? this.onCreate : false}
         {...rest}
       />
     );
@@ -35,6 +35,7 @@ class MultiselectForm extends Component {
 MultiselectForm.propTypes = {
   input: PropTypes.object,
   onChange: PropTypes.func,
+  create: PropTypes.boolean,
 };
 
 export default MultiselectForm;
