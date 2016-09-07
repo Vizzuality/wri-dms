@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const rootPath = process.cwd();
+const path = require('path');
 require('dotenv').config({
   silent: true,
 });
@@ -39,6 +40,7 @@ const webpackConfig = {
   output: {
     path: 'dist',
     filename: '[name].bundle.js',
+    publicPath: '/',
   },
   // this section allows imports with absolute paths (as if usiong node_modules)
   resolve: {
@@ -54,14 +56,27 @@ const webpackConfig = {
       containers: 'src/containers',
       utils: 'src/utils',
       constants: 'src/constants',
+      config: 'src/config',
     },
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', '.json'],
   },
   module: {
     loaders: [{
       test: /(\.js|\.jsx)$/,
-      exclude: /node_modules/,
+      include: [
+        path.resolve(__dirname, '../src'),
+        path.resolve(__dirname, '../node_modules/flash-notification-react-redux'),
+      ],
       loaders: ['babel-loader', 'eslint-loader'],
+    }, {
+      test: /\.json$/,
+      loader: 'json',
+    }, {
+      test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/i,
+      loaders: ['file?name=[path][name].[ext]'],
+    }, {
+      test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/i,
+      loaders: ['url-loader?mimetype=application/font-woff'],
     }],
   },
   postcss: function () {
@@ -80,6 +95,10 @@ if (process.env.NODE_ENV === 'production') {
   webpackConfig.module.loaders.push({
     test: /\.css$/,
     loader: ExtractTextPlugin.extract(['css']),
+  });
+  webpackConfig.module.loaders.push({
+    test: /\.less/,
+    loader: ExtractTextPlugin.extract(['css', 'less']),
   });
   webpackConfig.module.loaders.push({
     test: /\.(jpe?g|png|gif|svg)$/i,
@@ -111,6 +130,10 @@ if (process.env.NODE_ENV === 'production') {
   webpackConfig.module.loaders.push({
     test: /\.scss$/,
     loaders: ['style', 'css', 'postcss', 'sass'],
+  });
+  webpackConfig.module.loaders.push({
+    test: /\.less/,
+    loaders: ['style', 'css', 'less'],
   });
   webpackConfig.module.loaders.push({
     test: /\.(jpe?g|png|gif|svg)$/i,

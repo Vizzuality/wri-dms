@@ -1,0 +1,8 @@
+{
+  "connectorTypes": {
+    "rest":[ "featureservice", "cartodb"],
+    "wms": null,
+    "document": ["csv"],
+    "json": ["rwjson"]
+  }
+}

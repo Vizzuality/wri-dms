@@ -16,6 +16,6 @@ export function removeToken() {
 }
 
 export default function doFetch(url, options) {
-  const newHeaders = new Headers(Object.assign({}, headers, options.headers));
+  const newHeaders = new Headers(Object.assign({ 'Content-Type': 'application/json' }, headers, options.headers));
   return fetch(url, Object.assign({}, options, { headers: newHeaders, credentials: 'include' }));
 }

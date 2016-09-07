@@ -6,13 +6,18 @@ import thunk from 'redux-thunk';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import Routes from './routes';
+import { reducer as reduxFormReducer } from 'redux-form';
+import { GrowlerReducer } from 'flash-notification-react-redux';
 import * as reducers from './reducers';
 
+import 'react-widgets/lib/less/react-widgets.less';
 import '../styles/index.scss';
 
 const reducer = combineReducers({
   ...reducers,
+  form: reduxFormReducer,
   routing: routerReducer,
+  growler: GrowlerReducer,
 });
 
 

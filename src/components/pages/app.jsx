@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Header from 'components/commons/header';
+import { GrowlerContainer } from 'flash-notification-react-redux';
 import { setToken } from 'utils/fetch';
 
 class AppView extends React.Component {
@@ -26,6 +27,7 @@ class AppView extends React.Component {
   render() {
     return (
       <div>
+        <GrowlerContainer />
         <Header />
         <div className="container">
           {this.props.children}

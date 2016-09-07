@@ -6,7 +6,7 @@ import { createDataset } from 'actions/dataset';
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  createDataset: () => dispatch(createDataset()),
+  createDataset: (dataset) => dispatch(createDataset(dataset)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DatasetNew);
