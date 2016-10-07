@@ -1,16 +1,20 @@
-import { LOGIN, LOGIN_FAIL, GENERATE_TOKEN, LOGOUT } from 'actionNames';
+import { LOGIN, LOGIN_FAIL, GENERATE_TOKEN, LOGOUT, LOGIN_CHECKING } from 'actionNames';
 import { BASE_API_URL } from 'constants';
 import fetch, { removeToken } from '../utils/fetch';
 
 export function goToLogin() {
-  window.location = `${BASE_API_URL}/auth?callbackUrl=${`${window.location.protocol}//${window.location.host}`}&token=true`;
+  window.location = `${BASE_API_URL}/auth?callbackUrl=${`${window.location.protocol}//${window.location.host}${window.location.pathname}`}&token=true`;
   return { type: 'noexist' };
 }
 
 export function checkLogged() {
   return (dispatch) => {
     // debugger; // eslint-disable-line no-restricted-syntax, no-debugger
-    fetch(`${BASE_API_URL}/auth/checkLogged`, {
+    dispatch({
+      type: LOGIN_CHECKING,
+      payload: true,
+    });
+    fetch(`${BASE_API_URL}/auth/check-logged`, {
       method: 'GET',
       credentials: 'include',
     }).then((response) => {

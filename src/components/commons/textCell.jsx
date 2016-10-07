@@ -11,6 +11,9 @@ const TextCell = ({ rowIndex, data, columnKey, ...props }) => {
     }
     value = value[parts[i]];
   }
+  if (value.join) {
+    value = value.join(', ');
+  }
   return (
     <Cell {...props}>
       {value}

@@ -35,7 +35,7 @@ class MultiselectForm extends Component {
 MultiselectForm.propTypes = {
   input: PropTypes.object,
   onChange: PropTypes.func,
-  create: PropTypes.boolean,
+  create: PropTypes.bool,
 };
 
 export default MultiselectForm;

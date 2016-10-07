@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Header from 'components/commons/header';
+import Header from 'containers/commons/header';
 import { GrowlerContainer } from 'flash-notification-react-redux';
 import { setToken } from 'utils/fetch';
 
@@ -9,14 +9,17 @@ class AppView extends React.Component {
     if (this.props.token) {
       setToken(this.props.token);
     }
+    if (this.props.params.app && this.props.login.correct) {
+      this.props.updateApp(this.props.params.app);
+    }
     this.props.checkLogin();
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.login.correct === false && this.props.login.correct !== nextProps.login.correct) {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.login.checking && nextProps.login.correct === false && this.props.login.correct !== nextProps.login.correct) {
       this.props.goToLogin();
     } else if (this.props.token) {
-      window.location = '/';
+      window.location = window.location.pathname;
     }
   }
 
@@ -46,6 +49,8 @@ AppView.propTypes = {
   logout: PropTypes.func,
   login: PropTypes.object,
   token: PropTypes.string,
+  updateApp: PropTypes.func,
+  params: PropTypes.any,
 };
 
 export default AppView;

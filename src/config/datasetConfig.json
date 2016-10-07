@@ -3,6 +3,7 @@
     "rest":[ "featureservice", "cartodb"],
     "wms": null,
     "document": ["csv"],
-    "json": ["rwjson"]
-  }
+    "JsonConnector": ["rwjson"]
+  },
+  "status": ["saved", "deleted", "pending"]
 }

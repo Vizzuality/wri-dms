@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import DatasetForm from 'containers/forms/dataset';
+import DatasetForm from 'containers/forms/newDataset';
 
 class DatasetNew extends React.Component {
 

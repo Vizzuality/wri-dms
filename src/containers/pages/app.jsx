@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import App from 'components/pages/app';
 import { push } from 'react-router-redux';
 import { checkLogged, logout, goToLogin } from 'actions/login';
+import { updateApp } from 'actions/general';
 
 const mapStateToProps = (state, location) => ({
   login: state.login,
@@ -14,6 +15,7 @@ const mapDispatchToProps = (dispatch) => ({
   checkLogin: () => dispatch(checkLogged()),
   logout: () => dispatch(logout()),
   goToLogin: () => dispatch(goToLogin()),
+  updateApp: (app) => dispatch(updateApp(app)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
