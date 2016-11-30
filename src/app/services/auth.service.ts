@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 export class AuthService {
 
   static BASE_URL: string = `${environment.apiUrl}/auth`;
+  public user: any = {}
 
   constructor(private http: Http) {
   }
@@ -16,7 +17,7 @@ export class AuthService {
   }
 
   isLoggedIn(): Promise<any> {
-    return this.http.get(`${AuthService.BASE_URL}/check-logged`).toPromise();
+    return this.http.get(`${AuthService.BASE_URL}/check-logged`).toPromise().then((data) => this.user = data);
   }
 }
 

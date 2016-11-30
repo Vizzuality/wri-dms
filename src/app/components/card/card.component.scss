@@ -1,0 +1,10 @@
+:host {
+  .card {
+    height: 100%;
+    overflow-y: scroll;
+
+    &.selected {
+      border: 1px solid red;
+    }
+  }
+}

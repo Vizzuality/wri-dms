@@ -5,7 +5,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styles:[`
+    .content{
+      margin-top: 20px;
+    }
+  `]
 })
 export class AppComponent implements OnInit {
 

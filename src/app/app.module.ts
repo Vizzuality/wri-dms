@@ -5,6 +5,7 @@ import { HttpModule, RequestOptions } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import 'rxjs/Rx';
 
@@ -33,12 +34,11 @@ import { OauthRequestOptions } from './services/oauth-requestoptions.service';
 
 import { routes } from './routes';
 import { reducer } from './reducers';
-import { MetadataComponent } from './metadata/metadata.component';
+import { MetadataModule } from './pages/metadata/metadata.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MetadataComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +48,8 @@ import { MetadataComponent } from './metadata/metadata.component';
     StoreModule.provideStore(reducer),
     RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
+    NgbModule.forRoot(),
+    MetadataModule
   ],
   providers: [
     SERVICES,

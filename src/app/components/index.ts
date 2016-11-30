@@ -1,20 +1,24 @@
+import { CardComponent } from './card/card.component';
 import { Headers } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './header/header.component';
 
 
 export const COMPONENTS = [
-  HeaderComponent
+  HeaderComponent,
+  CardComponent
 ];
 
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS

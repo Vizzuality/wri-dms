@@ -15,7 +15,8 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [],
       "environments": {
@@ -40,5 +41,8 @@
   "defaults": {
     "styleExt": "scss",
     "prefixInterfaces": false
-  }
+  },
+  "addons": [
+    "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+  ]
 }

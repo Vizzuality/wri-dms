@@ -1,0 +1,33 @@
+<datatable class="material" [rowHeight]="50" [scrollbarV]="true" [rows]="metadatas$ | async" [columnMode]="'force'" [headerHeight]="50"
+  [footerHeight]="50" [rowHeight]="'auto'">
+  <datatable-column name="Type">
+    <template let-row="row">
+      {{row.attributes.resource?.type}}
+    </template>
+  </datatable-column>
+  <datatable-column name="Language">
+    <template let-row="row">
+      {{row.attributes.language}}
+    </template>
+  </datatable-column>
+  <datatable-column name="App">
+    <template let-row="row">
+      {{row.attributes.application}}
+    </template>
+  </datatable-column>
+  <datatable-column name="Created Date">
+    <template let-row="row">
+      {{row.attributes.createdAt | date:'dd/MM/yyyy HH:mm'}}
+    </template>
+  </datatable-column>
+  <datatable-column name="">
+    <template let-row="row">
+      <button (click)="edit(row)" *ngIf="this.user.extraUserData?.apps?.indexOf(row.attributes.application) >= 0">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+      <button (click)="delete(row)" *ngIf="this.user.extraUserData?.apps?.indexOf(row.attributes.application) >= 0">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+    </template>
+  </datatable-column>
+</datatable>

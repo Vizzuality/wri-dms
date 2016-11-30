@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap';
+@import '~angular2-data-table/src/components/datatable';
+@import '~angular2-data-table/src/themes/material';
+@import '~angular2-data-table/assets/icons.css';
+
+
+.metadata-resources {
+  .tab-content {
+    height: 300px;
+    overflow-y: scroll;
+    border-width: 1px;
+    border-color: transparent #ddd #ddd #ddd;
+    border-style: solid;
+  }
+}

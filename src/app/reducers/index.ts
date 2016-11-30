@@ -7,13 +7,16 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 
 import * as metadata from './metadata';
+import * as dataset from './dataset';
 
 export interface State {
-  metadata: metadata.State
+  metadata: metadata.State,
+  dataset: dataset.State
 }
 
 const reducers = {
   metadata: metadata.reducer,
+  dataset: dataset.reducer,
   router: routerReducer
 };
 

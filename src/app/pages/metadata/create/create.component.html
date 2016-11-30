@@ -1,0 +1,26 @@
+<h1>Create</h1>
+<div class="metadata-resources">
+  <ngb-tabset>
+    <ngb-tab title="Dataset">
+      <template ngbTabContent>
+        <div class="container">
+          <div class="input-group">
+            <input #datasetSearch (keyup)="searchDataset(datasetSearch.value)" value="{{ datasetSearchValue }}" class="form-control" placeholder="Search" autofocus>
+            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+          </div>
+          <app-card (click)="selectResource(dataset)"  [selected]="selectedResource?.id === dataset.id" *ngFor="let dataset of datasets$ | async" class="app-card" [title]="dataset.attributes.name" [description]="dataset.attributes.subtitle" ></app-card>
+        </div>
+      </template>
+    </ngb-tab>
+    <ngb-tab title="Layer">
+      <template ngbTabContent>
+
+      </template>
+    </ngb-tab>
+    <ngb-tab title="Widget">
+      <template ngbTabContent>
+
+      </template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
