@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   isLoggedIn(): Promise<any> {
-    return this.http.get(`${AuthService.BASE_URL}/check-logged`).toPromise().then((data) => this.user = data);
+    return this.http.get(`${AuthService.BASE_URL}/check-logged`).map(res => res.json()).toPromise().then((data) => this.user = data);
   }
 }
 

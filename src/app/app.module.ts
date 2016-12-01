@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import 'rxjs/Rx';
 
@@ -49,6 +50,7 @@ import { MetadataModule } from './pages/metadata/metadata.component';
     RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     NgbModule.forRoot(),
+    FlashMessagesModule,
     MetadataModule
   ],
   providers: [

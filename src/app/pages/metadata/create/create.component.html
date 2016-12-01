@@ -3,24 +3,115 @@
   <ngb-tabset>
     <ngb-tab title="Dataset">
       <template ngbTabContent>
-        <div class="container">
+        <div class="container" *ngIf="!datasets.loading">
           <div class="input-group">
-            <input #datasetSearch (keyup)="searchDataset(datasetSearch.value)" value="{{ datasetSearchValue }}" class="form-control" placeholder="Search" autofocus>
+            <input #datasetSearch (keyup)="searchDataset(datasetSearch.value)" value="{{ datasetSearchValue }}" class="form-control"
+              placeholder="Search" autofocus>
             <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
           </div>
-          <app-card (click)="selectResource(dataset)"  [selected]="selectedResource?.id === dataset.id" *ngFor="let dataset of datasets$ | async" class="app-card" [title]="dataset.attributes.name" [description]="dataset.attributes.subtitle" ></app-card>
+          <app-card (click)="selectResource(dataset, 'dataset')" [selected]="selectedResource?.id === dataset.id" *ngFor="let dataset of datasets.entities"
+            class="app-card" [title]="dataset.attributes.name" [description]="dataset.attributes.subtitle"></app-card>
+        </div>
+        <div class="container" *ngIf="datasets.loading">
+          <i class="fa fa-refresh fa-spin fa-3x fa-fw loading" ></i>
         </div>
       </template>
     </ngb-tab>
     <ngb-tab title="Layer">
       <template ngbTabContent>
-
+        <div class="container" *ngIf="!layers.loading">
+          <div class="input-group">
+            <input #layerSearch (keyup)="searchLayer(layerSearch.value)" value="{{ layerSearchValue }}" class="form-control"
+              placeholder="Search" autofocus>
+            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+          </div>
+          <app-card (click)="selectResource(layer, 'layer')" [selected]="selectedResource?.id === layer.id" *ngFor="let layer of layers.entities"
+            class="app-card" [title]="layer.attributes.name" [description]="layer.attributes.subtitle"></app-card>
+        </div>
+        <div class="container" *ngIf="layers.loading">
+          <i class="fa fa-refresh fa-spin fa-3x fa-fw loading" ></i>
+        </div>
       </template>
     </ngb-tab>
     <ngb-tab title="Widget">
       <template ngbTabContent>
-
+        <div class="container" *ngIf="!widgets.loading">
+          <div class="input-group">
+            <input #widgetSearch (keyup)="searchWidget(widgetSearch.value)" value="{{ widgetSearchValue }}" class="form-control"
+              placeholder="Search" autofocus>
+            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+          </div>
+          <app-card (click)="selectResource(widget, 'widget')" [selected]="selectedResource?.id === widget.id" *ngFor="let widget of widgets.entities"
+            class="app-card" [title]="widget.attributes.name" [description]="widget.attributes.subtitle"></app-card>
+        </div>
+        <div class="container" *ngIf="widgets.loading">
+          <i class="fa fa-refresh fa-spin fa-3x fa-fw loading" ></i>
+        </div>
       </template>
     </ngb-tab>
   </ngb-tabset>
+  <form [formGroup]="metadataForm" (submit)="doSubmit($event)">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" [class.has-danger]="metadataForm.controls.application.dirty && metadataForm.controls.application.errors">
+          <label for="app">Application</label>
+          <select class="form-control" id="app" formControlName="application" [(ngModel)]="metadataTemp.application" [class.form-control-danger]="metadataForm.controls.application.dirty && metadataForm.controls.application.errors">
+            <option></option>
+            <option *ngFor="let app of applications" [value]="app">{{app}}</option>
+          </select>
+          <div class="form-control-feedback" *ngIf="metadataForm.controls.application.dirty && metadataForm.controls.application.errors?.required">Field required</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" [class.has-danger]="metadataForm.controls.language.dirty && metadataForm.controls.language.errors">
+          <label for="language">Language</label>
+          <select class="form-control" id="language" formControlName="language" [(ngModel)]="metadataTemp.language" [class.form-control-danger]="metadataForm.controls.language.dirty && metadataForm.controls.language.errors">
+            <option></option>
+            <option *ngFor="let lang of languages" [value]="lang">{{lang}}</option>
+          </select>
+          <div class="form-control-feedback" *ngIf="metadataForm.controls.language.dirty && metadataForm.controls.language.errors?.required">Field required</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" formControlName="name" class="form-control" [(ngModel)]="metadataTemp.name"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" class="form-control" formControlName="description" [(ngModel)]="metadataTemp.description"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="source">Source</label>
+          <input type="text" id="source" class="form-control" formControlName="source" [(ngModel)]="metadataTemp.source"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="citation">Citation</label>
+          <input type="text" id="citation" formControlName="citation" class="form-control" [(ngModel)]="metadataTemp.citation"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="license">License</label>
+          <input type="text" id="license" formControlName="license" class="form-control" [(ngModel)]="metadataTemp.license"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!metadataForm.valid">Save</button>
+    </div>
+  </form>
 </div>

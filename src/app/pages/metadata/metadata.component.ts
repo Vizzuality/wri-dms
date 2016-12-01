@@ -8,6 +8,7 @@ import { Angular2DataTableModule } from 'angular2-data-table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
 import { RouterModule, ActivatedRoute, Router, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
@@ -23,6 +24,9 @@ export const routes: Routes = [
   { path: '', redirectTo: 'list' },
   { path: 'list', component: ListComponent },
   { path: 'create', component: CreateComponent },
+  { path: 'edit/dataset/:idDataset/:app/:language', component: CreateComponent },
+  { path: 'edit/dataset/:idDataset/layer/:idLayer/:app/:language', component: CreateComponent },
+  { path: 'edit/dataset/:idDataset/widget/:idWidget/:app/:language', component: CreateComponent },
 ];
 
 @NgModule({
@@ -40,7 +44,8 @@ export const routes: Routes = [
     RouterModule,
     Angular2DataTableModule,
     NgbModule,
-    ComponentsModule
+    ComponentsModule,
+    ReactiveFormsModule
   ]
 })
 export class MetadataModule { }

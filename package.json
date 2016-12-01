@@ -25,6 +25,7 @@
     "@ngrx/router-store": "^1.2.5",
     "@ngrx/store": "^2.2.1",
     "angular2-data-table": "^1.7.0",
+    "angular2-flash-messages": "^1.0.3",
     "bootstrap": "^4.0.0-alpha.5",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",

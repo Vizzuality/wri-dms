@@ -6,20 +6,20 @@ import { State } from '../reducers';
 
 
 export enum DatasetActions {
-  DATASET_LOAD,
-  DATASET_SEARCH
+  DATASET_SEARCH,
+  DATASET_LOADING
 };
 
 export class SearchAction implements Action {
-  type = DatasetActions.DATASET_SEARCH.toString();
+  type = DatasetActions[DatasetActions.DATASET_SEARCH];
 
   constructor(public payload: any) { }
 }
 
-export class LoadAction implements Action {
-  type = DatasetActions.DATASET_LOAD.toString();
+export class LoadingAction implements Action {
+  type = DatasetActions[DatasetActions.DATASET_LOADING];
 
-  constructor(public payload: any) { }
+  constructor(public payload: boolean) { }
 }
 
 export type Actions = SearchAction;
@@ -27,16 +27,15 @@ export type Actions = SearchAction;
 @Injectable()
 export class DatasetAction {
 
-  constructor(private datasetService: DatasetService, private store: Store<State>){
-
-  }
-
-  loadDatasets(term: string){
-    this.datasetService.getDatasets(term).do(x => console.log(x)).subscribe(data => this.store.dispatch(new LoadAction(data)));
-  }
+  constructor(private datasetService: DatasetService, private store: Store<State>){}
 
   searchDatasets(term: string){
-    this.store.dispatch(new SearchAction(term.toLowerCase()));
+    this.loadingDatasets();
+    this.datasetService.getDatasets(term).do(x => console.log(x)).subscribe(data => this.store.dispatch(new SearchAction(data)));
+  }
+
+  loadingDatasets(){
+    this.store.dispatch(new LoadingAction(true));
   }
 
 }

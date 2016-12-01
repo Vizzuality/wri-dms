@@ -11,4 +11,16 @@ export class MetadataSelector {
     return this.store.select( state => state.metadata.entities);
   }
 
+  getEdit(){
+    return this.store.select( state => state.metadata.edit).map(el => {
+      if (el) {
+        let newElement = {
+          id: el.id
+        };
+        return Object.assign({}, newElement, el.attributes);
+      }
+      return {};
+    } );
+  }
+
 }
