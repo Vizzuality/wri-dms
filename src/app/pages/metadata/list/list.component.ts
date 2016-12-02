@@ -72,7 +72,7 @@ export class ListComponent implements OnInit, OnDestroy {
       case 'layer':
         this.router.navigate(['../edit/dataset',metadata.attributes.dataset, 'layer', metadata.attributes.resource.id, metadata.attributes.application, metadata.attributes.language], {relativeTo: this.route});
         break;
-      case 'layer':
+      case 'widget':
         this.router.navigate(['../edit/dataset',metadata.attributes.dataset, 'widget', metadata.attributes.resource.id, metadata.attributes.application, metadata.attributes.language], {relativeTo: this.route});
         break;
       default:
