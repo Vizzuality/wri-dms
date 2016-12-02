@@ -14,3 +14,10 @@
     border-style: solid;
   }
 }
+
+.flash-message-fixed {
+  position: fixed;
+  z-index: 100;
+  width: 90%;
+  left: 5%;
+}

@@ -1,3 +1,4 @@
+import { KeysPipe } from './keys.pipe';
 import { CardComponent } from './card/card.component';
 import { Headers } from '@angular/http';
 import { NgModule } from '@angular/core';
@@ -10,7 +11,8 @@ import { HeaderComponent } from './header/header.component';
 
 export const COMPONENTS = [
   HeaderComponent,
-  CardComponent
+  CardComponent,
+  KeysPipe
 ];
 
 

@@ -1,4 +1,5 @@
-<h1>Create</h1>
+<h1 [hidden]="edit">Create</h1>
+<h1 [hidden]="!edit">Edit</h1>
 <div class="metadata-resources">
   <ngb-tabset>
     <ngb-tab title="Dataset">
@@ -50,12 +51,15 @@
       </template>
     </ngb-tab>
   </ngb-tabset>
+  <div>
+    <p *ngIf="this.selectedResource">Selected resource: ({{this.selectedResource?.type}}) {{this.selectedResource?.name}}</p>
+  </div>
   <form [formGroup]="metadataForm" (submit)="doSubmit($event)">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" [class.has-danger]="metadataForm.controls.application.dirty && metadataForm.controls.application.errors">
           <label for="app">Application</label>
-          <select class="form-control" id="app" formControlName="application" [(ngModel)]="metadataTemp.application" [class.form-control-danger]="metadataForm.controls.application.dirty && metadataForm.controls.application.errors">
+          <select class="form-control" [disabled]="edit" id="app" formControlName="application" [(ngModel)]="metadataTemp.application" [class.form-control-danger]="metadataForm.controls.application.dirty && metadataForm.controls.application.errors">
             <option></option>
             <option *ngFor="let app of applications" [value]="app">{{app}}</option>
           </select>
@@ -65,7 +69,7 @@
       <div class="col-md-6">
         <div class="form-group" [class.has-danger]="metadataForm.controls.language.dirty && metadataForm.controls.language.errors">
           <label for="language">Language</label>
-          <select class="form-control" id="language" formControlName="language" [(ngModel)]="metadataTemp.language" [class.form-control-danger]="metadataForm.controls.language.dirty && metadataForm.controls.language.errors">
+          <select class="form-control" [disabled]="edit" id="language" formControlName="language" [(ngModel)]="metadataTemp.language" [class.form-control-danger]="metadataForm.controls.language.dirty && metadataForm.controls.language.errors">
             <option></option>
             <option *ngFor="let lang of languages" [value]="lang">{{lang}}</option>
           </select>
@@ -109,6 +113,26 @@
         </div>
       </div>
     </div>
+    <fieldset formGroupName="info">
+      <legend>Info fields</legend>
+      <div class="row">
+        <div class="col-md-6" *ngFor="let key of metadataTemp.info | keys">
+          <div class="form-group">
+            <label>{{key}}</label>
+            <input type="text" formControlName="{{key}}" class="form-control"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Add Field</label>
+            <input type="text" class="form-control form-control-inline" #valueField/>
+            <button type="button" class="btn btn-primary" (click)="addField(valueField)">Add</button>
+          </div>
+        </div>
+      </div>
+    </fieldset>
 
     <div class="form-group">
       <button type="submit" class="btn btn-primary" [disabled]="!metadataForm.valid">Save</button>

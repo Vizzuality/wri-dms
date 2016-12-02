@@ -1,7 +1,15 @@
-.datatable.scroll-vertical{
-    height: 75vh;
+.datatable.scroll-vertical {
+  height: 75vh;
+}
+
+.search {
+  padding: 8px;
+  margin: 15px auto;
+  width: 30%;
 }
 
 .btn {
   margin-bottom: 10px;
+  float: right;
+  margin-top: 20px;
 }

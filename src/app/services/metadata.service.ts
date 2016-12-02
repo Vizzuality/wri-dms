@@ -46,7 +46,7 @@ export class MetadataService {
     } else if (params.idWidget){
       url = `/dataset/${params.idDataset}/widget/${params.idWidget}/metadata?app=${params.app}&language=${params.language}`;
     } else if (params.idLayer){
-      url = `/dataset/${params.idDatasett}/layer/${params.idLayer}/metadata?app=${params.app}&language=${params.language}`;
+      url = `/dataset/${params.idDataset}/layer/${params.idLayer}/metadata?app=${params.app}&language=${params.language}`;
     }
     return this.http.patch(`${MetadataService.BASE_URL}${url}`, metadata).map(res => res.json());
   }
@@ -58,7 +58,7 @@ export class MetadataService {
     } else if (params.idWidget){
       url = `/dataset/${params.idDataset}/widget/${params.idWidget}/metadata?app=${params.app}&language=${params.language}`;
     } else if (params.idLayer){
-      url = `/dataset/${params.idDatasett}/layer/${params.idLayer}/metadata?app=${params.app}&language=${params.language}`;
+      url = `/dataset/${params.idDataset}/layer/${params.idLayer}/metadata?app=${params.app}&language=${params.language}`;
     }
     return this.http.get(`${MetadataService.BASE_URL}${url}`).map(res => res.json()).map(res => res.data[0]);
   }

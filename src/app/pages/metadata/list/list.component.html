@@ -1,6 +1,7 @@
 <div>
   <a class="btn btn-primary" [routerLink]="['../create']">Create Metadata</a>
-  <datatable class="material" [rowHeight]="50" [scrollbarV]="true" [rows]="metadatas$ | async" [columnMode]="'force'" [headerHeight]="50"
+  <input type='text' class="search" placeholder='Search' #search (keyup)='updateFilter(search.value)'/>
+  <datatable class="material" [rowHeight]="50" [scrollbarV]="true" [rows]="metadatasFilter" [columnMode]="'force'" [headerHeight]="50"
     [footerHeight]="50" [rowHeight]="'auto'">
     <datatable-column name="Name">
       <template let-row="row">

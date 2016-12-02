@@ -17,7 +17,9 @@ import {
 } from '@angular/router';
 import {
   LocationStrategy,
-  PathLocationStrategy
+  PathLocationStrategy,
+  HashLocationStrategy,
+  APP_BASE_HREF
 } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -59,7 +61,8 @@ import { MetadataModule } from './pages/metadata/metadata.component';
     SELECTORS,
     LoggedInGuard,
     { provide: RequestOptions, useClass: OauthRequestOptions },
-    { provide: LocationStrategy, useClass: PathLocationStrategy }
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

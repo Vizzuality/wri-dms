@@ -52,14 +52,14 @@ export class MetadataAction {
     this.metadataService.createMetadata(metadata).subscribe((data) =>  {
       this.flashMessagesService.show('Metadata created successfully', {cssClass: 'alert-success'});
       this.store.dispatch(go(['/metadata/list'], { created: 'true' }));
-    }, (error) => this.flashMessagesService.show(JSON.parse(error._body).errors[0].detail, {cssClass: 'alert-danger'}));
+    }, (error) => this.flashMessagesService.show(JSON.parse(error._body).errors[0].detail, {cssClass: 'alert-danger flash-message-fixed', timeout: 2000}));
   }
 
   updateMetadata(params, metadata: Metadata){
     this.metadataService.updateMetadata(params, metadata).subscribe((data) =>  {
-      this.flashMessagesService.show('Metadata updated successfully', {cssClass: 'alert-success'});
+      this.flashMessagesService.show('Metadata updated successfully', {cssClass: 'alert-success', timeout: 100000000});
       this.store.dispatch(go(['/metadata/list'], { created: 'true' }));
-    }, (error) => this.flashMessagesService.show(JSON.parse(error._body).errors[0].detail, {cssClass: 'alert-danger'}));
+    }, (error) => this.flashMessagesService.show(JSON.parse(error._body).errors[0].detail, {cssClass: 'alert-danger flash-message-fixed', timeout: 2000}));
   }
 
   loadMetadata(params) {

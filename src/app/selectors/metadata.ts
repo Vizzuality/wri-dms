@@ -13,7 +13,7 @@ export class MetadataSelector {
 
   getEdit(){
     return this.store.select( state => state.metadata.edit).map(el => {
-      if (el) {
+      if (el && el.id) {
         let newElement = {
           id: el.id
         };

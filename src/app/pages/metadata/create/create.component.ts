@@ -54,6 +54,8 @@ export class CreateComponent implements OnInit, OnDestroy {
   metadataTemp: any = {}
   languages: string[] = ['es', 'en', 'fr']
   applications: string[]
+  edit: boolean
+
 
   private searchDatasetStream = new Subject<string>()
   private searchLayerStream = new Subject<string>()
@@ -61,8 +63,10 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   constructor(private metadataAction: MetadataAction, private metadataSelector: MetadataSelector,private authService: AuthService, private datasetSelector: DatasetSelector, private datasetAction: DatasetAction, private layerSelector: LayerSelector, private layerAction: LayerAction, private widgetSelector: WidgetSelector, private widgetAction: WidgetAction, private formBuilder: FormBuilder, private route: ActivatedRoute) {
       this.paramsSubs = this.route.params.subscribe(params => {
-        this.params = params;
-        this.metadataAction.loadMetadata(params);
+        if (params['idDataset']){
+          this.params = params;
+          this.metadataAction.loadMetadata(params);
+        }
       });
 
      const searchDatasetSource = this.searchDatasetStream
@@ -91,21 +95,43 @@ export class CreateComponent implements OnInit, OnDestroy {
         return searchTerm;
       })
       .subscribe(term => this.widgetAction.searchWidgets(term));
+
+      this.metadataForm = this.formBuilder.group({
+        application: ['', Validators.required],
+        language: ['', Validators.required],
+        name: '',
+        citation: '',
+        description: '',
+        license: '',
+        source: '',
+        info: new FormGroup({})
+      });
   }
 
   ngOnInit() {
     if (this.authService.user.extraUserData) {
-      window.console.log(this.authService.user);
       this.applications = this.authService.user.extraUserData.apps;
     }
-
-
-    this.editSubs = this.metadataSelector.getEdit().do(x => window.console.log('metadata', x)).subscribe(data => {
-      if (data) {
-        this.metadataTemp = data;
-        this.selectedResource = data;
-      }
-    });
+    if(this.params && this.params.idDataset) {
+      this.editSubs = this.metadataSelector.getEdit().subscribe(data => {
+        if (data && Object.keys(data).length > 0) {
+          this.metadataTemp = Object.assign(this.metadataTemp, data);
+          this.selectedResource = {
+            id: (<any>data).resource.id,
+            type: (<any>data).resource.type,
+            dataset: (<any>data).dataset,
+            name: (<any>data).name
+          }
+          this.edit = true;
+          this.metadataForm.controls['application'].disable();
+          this.metadataForm.controls['language'].disable();
+          if (this.metadataTemp.info){
+            let keys = Object.keys(this.metadataTemp.info);
+            keys.map(key => (<FormGroup>this.metadataForm.controls['info']).addControl(key, new FormControl(this.metadataTemp.info[key])))
+          }
+        }
+      });
+    }
 
     this.datasets$ = this.datasetSelector.getDatasetState();
     this.datasetAction.searchDatasets('');
@@ -119,23 +145,15 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.widgetAction.searchWidgets('');
     this.widgetSubs = this.widgets$.subscribe((data) => this.widgets = data);
 
-    this.metadataForm = this.formBuilder.group({
-      application: ['', Validators.required],
-      language: ['', Validators.required],
-      name: '',
-      citation: '',
-      description: '',
-      license: '',
-      source: ''
-    });
-
   }
 
   ngOnDestroy() {
     this.datasetSubs.unsubscribe();
     this.layerSubs.unsubscribe();
     this.widgetSubs.unsubscribe();
-    this.editSubs.unsubscribe();
+    if(this.editSubs){
+      this.editSubs.unsubscribe();
+    }
     this.paramsSubs.unsubscribe();
   }
 
@@ -152,19 +170,44 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   selectResource(resource, type){
-    this.selectedResource = resource;
-    this.selectedType = type;
+    if (!this.edit) {
+      this.selectedResource = {
+        id: resource.id,
+        type: type,
+        name: resource.attributes.name,
+        dataset: resource.attributes.name
+      };
+    }
+  }
+
+  addField(input) {
+    if (input && input.value) {
+      let name = input.value;
+      if (!this.metadataTemp.info) {
+        this.metadataTemp.info = {};
+      }
+      if (this.metadataTemp.info){
+        this.metadataTemp.info[name] = '';
+        (<FormGroup>this.metadataForm.controls['info']).addControl(name, new FormControl(''));
+      }
+      input.value = '';
+    }
   }
 
   doSubmit(e) {
     e.preventDefault();
     if (this.metadataForm.valid && this.selectedResource) {
-      let metadata = Object.assign({}, this.metadataTemp);
+      let metadata = Object.assign({}, this.metadataForm.value);
       metadata.resource = {
-        type: this.selectedType,
+        type: this.selectedResource.type,
         id: this.selectedResource.id
       };
+      if (this.selectedResource.type !== 'dataset') {
+        metadata.dataset = this.selectedResource.dataset;
+      }
       if(this.metadataTemp.id) {
+        metadata.language = this.metadataTemp.language;
+        metadata.application = this.metadataTemp.application;
         this.metadataAction.updateMetadata(this.params, metadata);
       } else {
         this.metadataAction.createMetadata(metadata);
