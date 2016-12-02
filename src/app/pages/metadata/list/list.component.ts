@@ -68,7 +68,9 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   delete(metadata){
-    this.metadataAction.deleteMetadata(metadata);
+    if (window.confirm('Are you sure that you want to delete?')){
+      this.metadataAction.deleteMetadata(metadata);
+    }
   }
 
 }
