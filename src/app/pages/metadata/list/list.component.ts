@@ -19,6 +19,8 @@ export class ListComponent implements OnInit, OnDestroy {
   metadatasFilter: Metadata[] = []
   metadataSub: Subscription
   user: any = {}
+  filter: string
+
   private searchDatasetStream = new Subject<string>()
 
   constructor(private metadataSelector: MetadataSelector, private metadataAction: MetadataAction, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
@@ -27,11 +29,26 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.metadataAction.searchMetadatas();
-    this.metadataSub = this.metadataSelector.getMetadata().map((data) => data.map((el) => Object.assign({}, el))).subscribe(data => this.metadatas = this.metadatasFilter = data);
+    this.metadataSub = this.metadataSelector.getMetadata().map((data) => data.map((el) => Object.assign({}, el))).subscribe(data => {
+      this.metadatas = this.metadatasFilter = data;
+      if (this.filter) {
+        this.metadatasFilter = this.metadatas.filter(d => {
+          let val = d.attributes.resource.type.indexOf(this.filter) >= 0 || d.attributes.language.indexOf(this.filter) >= 0 || d.attributes.application.indexOf(this.filter) >= 0 || !this.filter;
+          if(!val && d.attributes.name){
+            return d.attributes.name.indexOf(this.filter) >= 0;
+          }
+          return val;
+        });
+      }
+    });
 
     const searchDatasetSource = this.searchDatasetStream
       .debounceTime(300)
       .distinctUntilChanged()
+      .map(data => {
+        this.filter = data;
+        return this.filter;
+      })
       .subscribe(term => {
         this.metadatasFilter = this.metadatas.filter(d => {
           let val = d.attributes.resource.type.indexOf(term) >= 0 || d.attributes.language.indexOf(term) >= 0 || d.attributes.application.indexOf(term) >= 0 || !term;
