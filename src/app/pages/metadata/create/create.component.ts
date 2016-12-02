@@ -175,7 +175,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         id: resource.id,
         type: type,
         name: resource.attributes.name,
-        dataset: resource.attributes.name
+        dataset: resource.attributes.dataset
       };
     }
   }
