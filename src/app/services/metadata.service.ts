@@ -20,9 +20,9 @@ export class MetadataService {
     if (metadata.attributes.resource.type === 'dataset') {
       url = `/dataset/${metadata.attributes.resource.id}/metadata?application=${metadata.attributes.application}&language=${metadata.attributes.language}`;
     } else if (metadata.attributes.resource.type === 'widget'){
-      url = `/dataset/${metadata.attributes.dataset}/widget/${metadata.resource.id}/metadata?application=${metadata.attributes.application}&language=${metadata.attributes.language}`;
+      url = `/dataset/${metadata.attributes.dataset}/widget/${metadata.attributes.resource.id}/metadata?application=${metadata.attributes.application}&language=${metadata.attributes.language}`;
     } else if (metadata.attributes.resource.type === 'layer'){
-      url = `/dataset/${metadata.attributes.dataset}/layer/${metadata.resource.id}/metadata?application=${metadata.attributes.application}&language=${metadata.attributes.language}`;
+      url = `/dataset/${metadata.attributes.dataset}/layer/${metadata.attributes.resource.id}/metadata?application=${metadata.attributes.application}&language=${metadata.attributes.language}`;
     }
     return this.http.delete(`${MetadataService.BASE_URL}${url}`);
   }
